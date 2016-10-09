@@ -1,0 +1,35 @@
+# Contributor: Antoine GIRARD <sapk@sapk.fr>
+# Maintainer: Antoine GIRARD <sapk@sapk.fr>
+# Based on : https://git.archlinux.org/svntogit/community.git/tree/trunk/PKGBUILD?h=packages/curlftpfs
+
+pkgname=curlftpfs
+pkgver=0.9.2
+pkgrel=1
+pkgdesc="A filesystem for acessing FTP hosts based on FUSE and libcurl."
+url="http://curlftpfs.sourceforge.net/"
+license="GPL"
+depends="curl curl-dev fuse fuse-dev glib glib-dev"
+arch="i686 x86_64"
+source="http://downloads.sourceforge.net/sourceforge/curlftpfs/$pkgname-$pkgver.tar.gz
+	ioerror.patch"
+subpackages="$pkgname-doc"
+
+builddir="$srcdir"/$pkgname-$pkgver
+
+build() {
+  cd $builddir
+  CFLAGS=" -D__off_t=int" ./configure --prefix=/usr
+  make
+}
+
+package() {
+  cd $builddir
+  make DESTDIR="$pkgdir" install
+}
+
+md5sums="b452123f755114cd4461d56c648d9f12  curlftpfs-0.9.2.tar.gz
+7a8db686293463ba3148c7032871c883  ioerror.patch"
+sha256sums="4eb44739c7078ba0edde177bdd266c4cfb7c621075f47f64c85a06b12b3c6958  curlftpfs-0.9.2.tar.gz
+13999b8516d7dc80ec202a8629ce03af207c83b5a82b2d9b09a8e3fa4f77f4e9  ioerror.patch"
+sha512sums="df07c418d175f766c89525017fc56e79726061eee0c3a6607ded0e1bf24f64f1475ba0e546157b65892194e3c4414c120822bf8fb175437e68366f82de216067  curlftpfs-0.9.2.tar.gz
+6d5454dc9b09279067028175458dd3dd1cecc7f99d11e2fe7048b9b9c31d9ed213ed916698f9311c5278e9389b4a53e0fde5fe735e613d80cbd6423041fe8122  ioerror.patch"
